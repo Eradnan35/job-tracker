@@ -35,7 +35,7 @@ def upgrade() -> None:
     sa.Column('title', sa.String(length=200), nullable=False),
     sa.Column('company', sa.String(length=200), nullable=False),
     sa.Column('location', sa.String(length=200), nullable=True),
-    sa.Column('status', sa.Enum('APPLIED', 'INTERVIEW', 'OFFER', 'REJECTED', 'SAVED', name='jobstatus'), nullable=False),
+    sa.Column('status', sa.Enum('applied', 'interview', 'offer', 'rejected', 'saved', name='jobstatus'), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), nullable=False),
     sa.Column('user_id', sa.Uuid(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ondelete='CASCADE'),

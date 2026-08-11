@@ -29,7 +29,7 @@ class Job(Base):
     location: Mapped[str] = mapped_column(String(200), nullable=True)
 
     status: Mapped[JobStatus] = mapped_column(
-        SAEnum(JobStatus, name="jobstatus"), 
+        SAEnum(JobStatus, name="jobstatus", values_callable=lambda obj: [e.value for e in obj]),
         nullable=False,
         default=JobStatus.SAVED,
     )

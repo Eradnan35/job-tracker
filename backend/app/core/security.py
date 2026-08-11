@@ -6,27 +6,23 @@ from datetime import datetime, timedelta, timezone
 from typing import Any
 
 from jose import jwt, JWTError
-from passlib.context import CryptContext
-
+import bcrypt
 from app.core.config import settings
-
-# CryptContext manages hashing schemes.
-# bcrypt is the industry standard for password hashing — it's slow by design,
-# making brute-force attacks expensive.
-# deprecated="auto" will automatically re-hash passwords that use weaker schemes
-# if we ever add more schemes in the future.
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
 
 def hash_password(plain_password: str) -> str:
     """Return a bcrypt hash of the given plain-text password."""
-    return pwd_context.hash(plain_password)
-
+    # bcrypt requires bytes
+    pwd_bytes = plain_password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(pwd_bytes, salt).decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Return True if plain_password matches the stored hash, False otherwise."""
     try:
-        return pwd_context.verify(plain_password, hashed_password)
+        return bcrypt.checkpw(
+            plain_password.encode('utf-8'),
+            hashed_password.encode('utf-8')
+        )
     except Exception:
         return False
 

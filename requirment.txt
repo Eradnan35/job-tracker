@@ -1,7 +1,11 @@
-fastapi uvicorn
-sqlalchemy psycopg2-binary
-python-jose passlib[bcrypt]
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary
+python-jose[cryptography]
+passlib[bcrypt]
 alembic
-install python-jose[cryptography]
-install passlib[bcrypt]
-install python-multipart
+python-multipart
+python-dotenv
+pydantic-settings
+email-validator
